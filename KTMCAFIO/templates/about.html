@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+<!--{% load static %}-->
+{% block content %}
+
+        <!-- Hero Start -->
+        <div class="container-fluid bg-light py-6 my-6 mt-0">
+            <div class="container text-center animated bounceInDown">
+                <h1 class="display-1 mb-4">About Us</h1>
+                <ol class="breadcrumb justify-content-center mb-0 animated bounceInDown">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item text-dark" aria-current="page">About</li>
+                </ol>
+            </div>
+        </div>
+        <!-- Hero End -->
+
+
+        <!--About Start -->
+
+        <div class="container-fluid py-6">
+                {% for ab in abouts %}
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5 wow bounceInUp" data-wow-delay="0.1s">
+                <img src="{{ ab.image.url }}" class="img-fluid rounded" alt="">
+            </div>
+            <div class="col-lg-7 wow bounceInUp" data-wow-delay="0.3s">
+                <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">About Us</small>
+                <h1 class="display-5 mb-4">{{ ab.title }}</h1>
+                <p class="mb-4">{{ ab.description }}</p>
+                <a href="about" class="btn btn-primary py-3 px-5 rounded-pill">About Us<i class="fas fa-arrow-right ps-2"></i></a>
+            </div>
+
+        </div>
+
+    </div>
+{% endfor %}
+
+</div>
+
+        <!-- About End -->
+
+
+                <!-- Team Start -->
+          <div class="container-xxl pt-5 pb-3">
+            <div class="container">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Team Members</h5>
+                    <h1 class="mb-5">Our Teams</h1>
+                </div>
+                <div class="row g-4">
+                    {% for tm in teams %}
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item text-center rounded overflow-hidden">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="{{tm.image.url}}" alt="">
+                            </div>
+                            <h5 class="mb-0">{{tm.name}}</h5>
+                            <small>{{tm.designation}}</small>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Team End -->
+
+
+        <!-- Testimonial Start -->
+        <div class="container-fluid py-6">
+            <div class="container">
+
+                <div class="text-center wow bounceInUp" data-wow-delay="0.1s">
+                    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">Testimonial</small>
+                    <h1 class="display-5 mb-5">What Our Customers says!</h1>
+                </div>
+                <div class="owl-carousel owl-theme testimonial-carousel testimonial-carousel-1 mb-4 wow bounceInUp" data-wow-delay="0.1s">
+                    {% for rev in review %}
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="{{ rev.image.url }}" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">{{rev.name}}</h4>
+                                <p class="m-0">{{rev.profession}}</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="d-flex">
+                                   {% for _ in rev.star_list %}
+                                <i class="fas fa-star text-primary"></i>
+                            {% endfor %}
+                            </div>
+                            <p class="fs-5 m-0 pt-3">{{rev.description}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial End -->
+
+{% endblock %}
