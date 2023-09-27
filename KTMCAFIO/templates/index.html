@@ -3,23 +3,25 @@
 {% block content %}
 
 
-        <!-- Hero Start -->
-        <div class="container-fluid bg-light py-6 my-6 mt-0">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-7 col-md-12">
-                        <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-4 animated bounceInDown">Welcome to <span class="text-primary">KTM CAFIO </span> </small>
-                        <h1 class="display-1 mb-4 animated bounceInDown">Order in <span class="text-primary">KTM CAFIO </span>Best Cafe and Restaurant you find </h1>
-                        <a href="/menu" class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 me-4 animated bounceInLeft">Order Now</a>
-                        <a href="/about" class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 animated bounceInLeft">Know More</a>
-                    </div>
-                    <div class="col-lg-5 col-md-12">
-                        <img src="{% static 'img/hero.png' %}" class="img-fluid rounded animated zoomIn" alt="">
+            <!--  Hero Start -->
+            <div class="container-fluid bg-light py-8 my-8 mt-0">
+                <div class="container">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-lg-7 col-md-12">
+                            <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-2 mb-4 animated bounceInDown">Welcome to <span class="text-primary">KTM CAFIO</span></small>
+                            <h1 class="display-2 mb-4 animated bounceInDown">Order in <span class="text-primary">KTM CAFIO</span> - Best Cafe and Restaurant you'll find</h1>
+                            <a href="/menu" class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 me-4 animated bounceInLeft">Order Now</a>
+                            <a href="/about" class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 animated bounceInLeft">Know More</a>
+                        </div>
+                        <div class="col-lg-5 col-md-12">
+                            <img src="{% static 'img/hero1.png' %}" class="img-fluid rounded animated zoomIn" alt="">
+                        </div>
                     </div>
                 </div>
-            </div>*
-        </div>
-        <!-- Hero End -->
+            </div>
+            <!--  Hero End -->
+
+
 
 
 <!-- About Start -->
@@ -120,10 +122,16 @@
             <div class="tab-content">
                 <div id="special-items" class="tab-pane fade show active">
                     <div class="row g-4">
+
+                        <div class="image-container">
+                            {% for img in special_img %}
+                                <img class="flex-shrink-0 img-fluid rounded-circle" src="{{img.image.url}}" alt="">
+                            {% endfor %}
+                        </div>
+                          <br><br><br>
                         {% for special_item in special_items %}
                         <div class="col-lg-6 wow bounceInUp" data-wow-delay="0.1s">
                             <div class="menu-item d-flex align-items-center">
-                                <img class="flex-shrink-0 img-fluid rounded-circle" src="{{ special_item.image.url }}" alt="">
                                 <div class="w-100 d-flex flex-column text-start ps-4">
                                     <div class="d-flex justify-content-between border-bottom border-primary pb-2 mb-2">
                                         <h4>{{ special_item.name }}</h4>

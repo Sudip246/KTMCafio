@@ -1,11 +1,6 @@
 from django.contrib import admin
 from .models import *
 
-# Register your models here.
-# admin.site.register(Contact)
-# admin.site.register(Information)
-
-
 admin.site.site_header = "KTM_CAFIO | Admin"
 
 
@@ -58,6 +53,13 @@ class MenuCategoryAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
+@admin.register(MenuItemImage)
+class MenuItemImageAdmin(admin.ModelAdmin):
+    list_display = ("slug", "image", "category")
+    list_filter = ("slug", "category")
+    search_fields = ("category", "slug")
+
+
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "price", "description")
@@ -75,6 +77,6 @@ class CartAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ("id", "fname", 'lname', "email", "phone", "address","status" )
-    list_filter = ("email", "phone", "country", "city", "state")
+    list_filter = ("email", "phone", "city")
     search_fields =("email", "phone", "city")
 

@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from .models import *
 
@@ -25,6 +25,7 @@ class HomeView(BaseView):
         self.views['abouts'] = About.objects.all()
         self.views['teams'] = Team.objects.all()
         self.views['review'] = Review.objects.all()
+        self.views['special_img'] = MenuItemImage.objects.filter(labels='special')
         self.views['special_items'] = MenuItem.objects.filter(labels='special')
         for review in self.views['review']:
             review.star_list = range(review.star_rating)
@@ -66,6 +67,7 @@ class MenuView(BaseView):
         self.views['categories']= MenuCategory.objects.all()
         for category in self.views['categories']:
             category.items = MenuItem.objects.filter(category=category)
+            category.image = MenuItemImage.objects.filter(category=category)
         return render(request, 'menu.html', self.views)
 
 
@@ -149,23 +151,9 @@ def delete_cart(request, slug):
         return redirect('/cart')
 
 
-class CheckoutView(BaseView):
-    def get(self, request):
-        username = request.user.username
-        self.views["cart_counts"] = count_cart(request)
-        self.views['orders'] = Cart.objects.filter(username=username)
-        s = 0
-        for i in self.views["orders"]:
-            s = s + i.total
-        self.views["sub_total"] = s
-        self.views['delivery_charge'] = 100
-        self.views['grand_total'] = s+100
-
-        return render(request, 'checkout.html', self.views)
-
-
-
 def signup(request):
+    views = {}
+    views['information'] = Information.objects.all()
     if request.method == "POST":
         first_name = request.POST['f_name']
         last_name = request.POST['l_name']
@@ -193,22 +181,26 @@ def signup(request):
                 return redirect('login')
         else:
             messages.error(request, 'The password does not match.')
-    return render(request, 'signup.html')
+    return render(request, 'signup.html',views )
 
 
 def login_view(request):
-    if request.method == 'POST':
+    views = {}
+    views['information'] = Information.objects.all()
+
+    if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
 
-        user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Invalid username or password.')
+            messages.error(request, "Invalid username or password. Please try again.")
+            return redirect('login')
 
-    return render(request, 'login.html')
+    return render(request, "login.html", views)
 
 
 class CheckoutView(BaseView):
@@ -225,6 +217,8 @@ class CheckoutView(BaseView):
 
             return render(request, 'checkout.html', self.views)
 
+
+
     @login_required
     def placeorder(request):
         if request.method == 'POST':
@@ -235,11 +229,11 @@ class CheckoutView(BaseView):
             phone = request.POST['phone']
             address = request.POST['address']
             city = request.POST['city']
-            state = request.POST['state']
-            country = request.POST['country']
-            pincode = request.POST['pincode']
-            total_price = 0  # Calculate the total price based on the selected products
-            payment_mode = request.POST['payment_mode']
+            total_price = 0
+
+            if email != request.user.email:
+                messages.error(request, 'Email does not match your account')
+                return redirect('checkout')
 
             # Create a new order instance
             order = Order(
@@ -249,16 +243,16 @@ class CheckoutView(BaseView):
                 phone=phone,
                 address=address,
                 city=city,
-                state=state,
-                country=country,
-                pincode=pincode,
                 total_price=total_price,
-                payment_mode=payment_mode,
-                status='Pending'  # Set the default status
+                status='Pending'
             )
-            order.save()  # Save the order to the database
+            order.save()
             Cart.objects.filter(username=request.user.username).delete()
-        return redirect('/')
+
+            return redirect('/')
+
+        # If the request method is not POST, you may want to handle this case accordingly.
+        return render(request, 'checkout')
 
 
 def change_order_status(request, order_id, new_status):

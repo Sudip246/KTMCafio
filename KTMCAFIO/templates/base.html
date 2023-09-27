@@ -52,26 +52,24 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="/" class="nav-item nav-link ">Home</a>
+                            <a href="about" class="nav-item nav-link ">About</a>
+                            <a href="menu" class="nav-item nav-link ">Menu</a>
                             <a href="contact" class="nav-item nav-link">Contact</a>
                         </div>`
                         <div class="btn-group">
-                            <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <i class="fas fa-search"></i>
-                            </button>
                              <div class="navbar-nav ml-auto">
                             {% if user.is_authenticated %}
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{user.username}}</a>
+                                <a href="/accounts/logout" class="nav-link dropdown-toggle" data-toggle="dropdown">{{user.username}}</a>
                                 <div class="dropdown-menu">
                                     <a href="/accounts/logout" class="dropdown-item">Logout</a>
                                 </div>
                             </div>
                             {% else %}
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
+                                <a href="/accounts/login" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
                                 <div class="dropdown-menu">
                                     <a href="/accounts/login" class="dropdown-item">Login</a>
-                                    <a href="/signup" class="dropdown-item">Signup</a>
                                 </div>
                             </div>
 
@@ -80,32 +78,12 @@
                             <a href="/cart" class="btn px-0 ml-3">
                                 <i class="fas fa-shopping-cart text-primary"></i>
                                 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{cart_counts}}</span>
-                            </a>
-                        </div>
+                            </a></div>
                 </nav>
             </div>
         </div>
         <!-- Navbar End -->
 
-
-        <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control bg-transparent p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal Search End -->
 
 
     {% block content %}
@@ -153,22 +131,22 @@
                     <div class="row g-2">
                         <!-- Social Media Images -->
                         <div class="col-4">
-                            <img src="{% static 'img/menu-01.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            <img src="{% static 'img/Burger.png' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
                         </div>
                         <div class="col-4">
-                            <img src="{% static 'img/menu-02.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            <img src="{% static 'img/FriedMomo.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
                         </div>
                         <div class="col-4">
-                            <img src="{% static 'img/menu-03.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            <img src="{% static 'img/ItalianPizza.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
                         </div>
                         <div class="col-4">
-                            <img src="{% static 'img/menu-04.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            <img src="{% static 'img/chillichicken.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
                         </div>
                         <div class="col-4">
-                            <img src="{% static 'img/menu-05.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            <img src="{% static 'img/hot-cappuccino.png' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
                         </div>
                         <div class="col-4">
-                            <img src="{% static 'img/menu-06.jpg' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            <img src="{% static 'img/img_1.png' %}" class="img-fluid rounded-circle border border-primary p-2" alt="">
                         </div>
                     </div>
                 </div>

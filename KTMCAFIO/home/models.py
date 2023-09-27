@@ -71,11 +71,20 @@ class MenuCategory(models.Model):
 LABELS = (('special', 'special'),)
 
 
+class MenuItemImage(models.Model):
+    slug = models.CharField(max_length=500, unique=True)
+    category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='media')
+    labels = models.CharField(choices=LABELS, max_length=50, blank=True)
+
+    # def __str__(self):
+    #     return self.image
+
+
 class MenuItem(models.Model):
     category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     price = models.IntegerField()
-    image = models.ImageField(upload_to='media')
     description = models.TextField()
     slug = models.CharField(max_length=500, unique=True)
     labels = models.CharField(choices=LABELS, max_length=50, blank = True)
@@ -92,9 +101,11 @@ class Cart(models.Model):
     date = models.DateTimeField(auto_now_add= True)
     checkout = models.BooleanField(default = False)
     items = models.ForeignKey(MenuItem, on_delete = models.CASCADE)
+    items_img = models.ForeignKey(MenuItemImage, on_delete = models.CASCADE)
 
     def __str__(self):
         return self.username
+
 
 
 orderstatuses = (('Pending', 'Pending'), ('Out for Shipping','Out for Shipping'), ('Completed','Completed'))
@@ -107,9 +118,6 @@ class Order(models.Model):
     phone = models.CharField(max_length = 300, null= False)
     address = models.TextField(null= False)
     city = models.CharField(max_length = 300, null= False)
-    state = models.CharField(max_length = 300, null= False)
-    country = models.CharField(max_length = 300, null= False)
-    pincode = models.CharField(max_length = 300, null= False)
     total_price  = models.FloatField(null = False)
     payment_mode = models.CharField(max_length = 300, null= False)
     payment_id = models.CharField(max_length = 300, null= True)
@@ -119,7 +127,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now =True, auto_now_add=False)
 
     def __str__(self):
-        return '{} - {}'.format(self.id)
+        return '{} - {}'.format(self.id, self.username)
 
     def update_status(self, new_status):
         valid_statuses = dict(orderstatuses)
