@@ -120,6 +120,7 @@ def add_to_cart(request, slug):
                 total=total,
                 quantity=1,
                 items=MenuItem.objects.get(slug=slug),
+                items_img = MenuItemImage.objects.get(slug=slug),
             )
             data.save()
     else:

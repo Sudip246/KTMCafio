@@ -67,7 +67,7 @@
                         <h6 class="mb-3">Products</h6>
                         {% for order in orders %}
                         <div class="d-flex justify-content-between">
-                             <img src="{{order.items_img.image.url}}" alt="" style="width: 50px;">{{order.items.name}}
+                             {{order.items.name}}
                             <p>{{order.items.price}}</p>
                         </div>
                         {% endfor %}
