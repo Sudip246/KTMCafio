@@ -101,7 +101,6 @@ class Cart(models.Model):
     date = models.DateTimeField(auto_now_add= True)
     checkout = models.BooleanField(default = False)
     items = models.ForeignKey(MenuItem, on_delete = models.CASCADE)
-    items_img = models.ForeignKey(MenuItemImage, on_delete = models.CASCADE)
 
     def __str__(self):
         return self.username
